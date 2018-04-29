@@ -1,0 +1,84 @@
+---
+title: "Derivatios e Risco"
+shorttitle: "Derivatios e Risco"
+author: "Glauber \\and Matheus \\and Rafael"
+date: "`r format(Sys.Date(), '%d-%m-%Y')`"
+#bibliography: library.bib
+output: 
+  beamer_presentation:
+    theme: "Madrid"
+    colortheme: "cf"
+    keep_tex: true
+    incremental: false
+    #fig_width: 10
+    #fig_height: 10
+    fig_caption: false
+    slide_level: 2
+    #template: artigo-template.tex
+    includes: 
+      in_header: cf-header.tex
+      before_body: cf-bb.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r inicio, include=FALSE}
+library(ggplot2)
+library(rugarch)
+library(xts)
+```
+
+# Derivativos
+
+## Contratos que derivam seu valor de outro ativo 
+
+Os derivativos são:
+
+- Instrumentos financeiros que derivam seu valor de um ativo subjacente.
+
+- Contrato pré-acordado entre as contrapartes.
+
+- Negociados em bolsa ou mercado de balcão (OTC).
+
+## Comprar ou vender um ativo no futuro
+
+- Contrato Futuro ou Termo - comprar ou vender um ativo em uma data
+futura por um preço determinado.
+
+- Futuro - ajustes diários e variados ativos subjacentes.
+
+- Termo - margem de garantia, incidência de juros e ações como ativo
+subjacente.
+
+- Ambos contratos são negociados em bolsa.
+
+# Opções, Futuros e Swaps
+
+## Opções
+
+
+
+## Futuros
+
+
+
+## Swaps
+
+
+# Risco
+
+## Probabilidade de eventos adversos
+
+
+## VaR - Valor em Risco
+
+
+## ES - _Expected Shortfall_
+
+## _Stress Test_
+
+
+

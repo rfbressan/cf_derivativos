@@ -1,5 +1,6 @@
 ## Funcoes utilizadas em derivativos.R
 ## artigo_fun.R
+
 if(!all(c("rugarch", "fExtremes", "xts", "tidyverse") %in% loadedNamespaces())){
   library(tidyverse)
   library(xts)
@@ -8,6 +9,39 @@ if(!all(c("rugarch", "fExtremes", "xts", "tidyverse") %in% loadedNamespaces())){
 } # Carrega os pacotes necessarios se faltantes
 
 cores <- detectCores() # Quantos cores estao rodando
+
+# prices ------------------------------------------------------------------
+# Extrai a serie de precos ajustados dos ativos em analise
+prices <- function(assets, start) {
+  n <- length(assets)
+  l_prices <- vector(mode = "list", length = n)
+  for (i in seq_len(n)) {
+    tb <- read_csv(paste0("./input/cf-", assets[i], ".csv"), 
+                   col_types = cols_only(Date = col_date(), 
+                                         `Adj Close` = col_double()))
+    l_prices[[i]] <- xts(tb$`Adj Close`, order.by = tb$Date)[paste0(start, "/")]
+    colnames(l_prices[[i]]) <- assets[i]
+  }
+  xts_prices <- na.locf(do.call(merge, l_prices))
+  return(xts_prices)
+}
+
+# VaR_port ----------------------------------------------------------------
+
+VaR_port <- function(R, 
+                     p = 0.99,
+                     method = "gaussian",
+                     portfolio_method = "component",
+                     weights = NULL,
+                     invert = FALSE){
+  var_p <- VaR(R = R,
+               p = p,
+               method = method,
+               portfolio_method = portfolio_method,
+               weights = weights,
+               invert = invert)
+  return(var_p$VaR)
+}
 
 # roll_fit ----------------------------------------------------------------
 

@@ -1,0 +1,267 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[]{Madrid}
+\usecolortheme{cf}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+            pdftitle={Derivatios e Risco},
+            pdfauthor={Glauber Matheus Rafael},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \let\insertsectionnumber\relax
+    \let\sectionname\relax
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \let\insertsubsectionnumber\relax
+  \let\subsectionname\relax
+  \frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template Beamer 
+% Based on MIT Beamer Template e Senac
+% Cores seguem o manual da marca do Clube de Finanças
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\usepackage{graphicx,url}
+\usepackage{tikz}
+\usepackage[brazil]{babel}   
+\usepackage{textpos}
+\usepackage{transparent}
+
+\batchmode
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[letterpaper,landscape,border shrink=5mm]
+\usepackage{amsmath,amssymb,enumerate,epsfig,bbm,calc,color,ifthen,capt-of}
+
+%-------------------------Declara figura do Logo-----------------------------------------------------
+\pgfdeclareimage[height=0.9cm]{CF}{Logo_CF_Colorido.pdf}
+%\logo{\pgfuseimage{Marca_Udesc}\vspace*{7.0cm}}
+%-------------------------Declara figura do Farnam Street--------------------------------------------
+\pgfdeclareimage[height=0.9cm]{Farnam}{Farnam_Street.pdf}
+
+
+%% ------------------ Figura de fundo do slide de titulo
+%\setbeamercolor{titlelike}{parent=structure}
+%\makeatletter
+%\setbeamertemplate{title page}
+%{
+%	\begin{tikzpicture}[remember picture, overlay]
+%	\node[at=(current page.center)]{
+%		\includegraphics[width=\paperwidth, height=\paperheight]{risk1.jpg}	
+%	};
+%	\end{tikzpicture}
+%	%	\vbox{}
+%	%	\vfill
+%	%	\begingroup
+%	%	\centering
+%	%	\pgfsetfillopacity{0.1}
+%	%	\setbeamercolor{title}{bg=black}
+%	%	\begin{beamercolorbox}[sep=8pt,center]{title}	
+%	%		\usebeamerfont{title}\inserttitle\par%
+%	%		\ifx\insertsubtitle\@empty%
+%	%		\else%
+%	%		\vskip0.25em%
+%	%		{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+%	%		\fi%
+%	%	\end{beamercolorbox}%
+%	\begin{textblock*}{0.8\textwidth}(2.5em, -2.5em)
+%		\centering
+%		\setbeamerfont{title}{size=\Huge}
+%		{\usebeamerfont{title}\usebeamercolor[bg]{title}\inserttitle\par}%
+%	\end{textblock*}
+%	%	\vskip3em\par
+%	%	\begin{beamercolorbox}[sep=8pt,center]{author}
+%	%		\usebeamerfont{author}\insertauthor
+%	%	\end{beamercolorbox}
+%	%	\begin{beamercolorbox}[sep=8pt,center]{institute}
+%	%		\usebeamerfont{institute}\insertinstitute
+%	%	\end{beamercolorbox}
+%	%	\begin{beamercolorbox}[sep=8pt,center]{date}
+%	%		\usebeamerfont{date}\insertdate
+%	%	\end{beamercolorbox}\vskip0.5em
+%	%	\endgroup
+%	\vfill
+%}
+%\makeatother
+
+%Global Background must be put in preamble
+%\usebackgroundtemplate%
+%{%
+%	\transparent{0.2}\includegraphics[width=\paperwidth,height=\paperheight]{risk-management.jpg}%
+%}
+
+
+%-------------------------Nome da seção sempre aos inícios ------------
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Agenda}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection{}
+
+% Para ativar os tópicos de forma incremental
+%\beamerdefaultoverlayspecification{<+->}
+% -----------------------------------------------------------------------------
+% -----Página de título sem o logo -----------------------------------
+%\renewcommand{\titlepage}{\setbeamertemplate{logo}{}\titlepage}
+%\setbeamertemplate{logo}{}\titlepage
+
+% ------------ Logo na parte superior direita --------------------------------
+%\addtobeamertemplate{frametitle}{}{%
+%\begin{textblock*}{100mm}(.85\textwidth,-0.9cm)
+%\pgfuseimage{CF}
+%\end{textblock*}}
+% ------------ Logo na parte inferior direita --------------------------------
+\addtobeamertemplate{frametitle}{}{%
+	\begin{textblock*}{100mm}(.88\textwidth,0.80\textheight)
+		\pgfuseimage{CF}
+\end{textblock*}}
+
+% ------------ Farnam na parte inferior esquerda -----------------------------
+\addtobeamertemplate{frametitle}{}{%
+	\begin{textblock*}{100mm}(.02\textwidth,0.80\textheight)
+		\pgfuseimage{Farnam}
+\end{textblock*}}
+%
+% - Para criar duas colunas em algum slide da apresentacao 
+% - a partir do Rmarkdown
+\def\begincols{\begin{columns}}
+\def\begincol{\begin{column}}
+\def\endcol{\end{column}}
+\def\endcols{\end{columns}}
+
+\title{Derivatios e Risco}
+\author{Glauber \and Matheus \and Rafael}
+\date{28-04-2018}
+
+\begin{document}
+\frame{\titlepage}
+
+%%------------------------------------------------------------------------------
+%% Before Body
+%%------------------------------------------------------------------------------
+%%---Gerador de Sumário---------------------------------------------------------
+\section[]{}
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+%---Fim do Sumário------------------------------------------------------------
+
+\section{Derivativos}\label{derivativos}
+
+\begin{frame}{Contratos que derivam seu valor de outro ativo}
+
+Os derivativos são:
+
+\begin{itemize}
+\item
+  Instrumentos financeiros que derivam seu valor de um ativo subjacente.
+\item
+  Contrato pré-acordado entre as contrapartes.
+\item
+  Negociados em bolsa ou mercado de balcão (OTC).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Comprar ou vender um ativo no futuro}
+
+\begin{itemize}
+\item
+  Contrato Futuro ou Termo - comprar ou vender um ativo em uma data
+  futura por um preço determinado.
+\item
+  Futuro - ajustes diários e variados ativos subjacentes.
+\item
+  Termo - margem de garantia, incidência de juros e ações como ativo
+  subjacente.
+\item
+  Ambos contratos são negociados em bolsa.
+\end{itemize}
+
+\end{frame}
+
+\section{Opções, Futuros e Swaps}\label{opcoes-futuros-e-swaps}
+
+\begin{frame}{Opções}
+
+\end{frame}
+
+\begin{frame}{Futuros}
+
+\end{frame}
+
+\begin{frame}{Swaps}
+
+\end{frame}
+
+\section{Risco}\label{risco}
+
+\begin{frame}{Probabilidade de eventos adversos}
+
+\end{frame}
+
+\begin{frame}{VaR - Valor em Risco}
+
+\end{frame}
+
+\begin{frame}{ES - \emph{Expected Shortfall}}
+
+\end{frame}
+
+\begin{frame}{\emph{Stress Test}}
+
+\end{frame}
+
+\end{document}

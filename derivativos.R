@@ -2,7 +2,7 @@
 ## VaR e ES para NATU3 e LAME4
 
 # Inicio ------------------------------------------------------------------
-packages <- c("fExtremes", "rugarch", "xts", "PerformanceAnalytics", "xtable", "tidyverse", 
+packages <- c("rugarch", "xts", "PerformanceAnalytics", "xtable", "tidyverse", 
                       "broom", "purrr", "gridExtra", "ggplot2", "WeightedPortTest")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -13,17 +13,17 @@ library(gridExtra)
 library(kableExtra)
 library(xtable)
 library(WeightedPortTest)
-#library(CADFtest) # Teste Dickey-Fuller
 library(xts)
 library(PerformanceAnalytics)
-library(fExtremes)
 library(rugarch)
 source("./derivativos_fun.R") # Carrega a funcao roll_fit para fazer o backtest
 
 # AMOSTRA COM DADOS A PARTIR DE 01-01-2006
 start <- as.Date("2006-01-01")
-end <- as.Date("2016-12-31")
+end <- as.Date("2007-01-01")
 backstart <- end + 1
+w1 <- 0.5 # Peso do primeiro ativo na carteira
+w <- c(w1, 1 - w1) # Vetor de pesos da carteira
 u_quant <- 0.92 # quantile for treshold u
 options(xtable.booktabs = TRUE) # utilizar o pacote booktabs no Latex
 options(xtable.tabular.environment = "longtable") # Utiliza o pacote longtable no Latex
@@ -33,12 +33,44 @@ list.returns <- function(asset, start) {
   tb <- read_csv(paste0("./input/cf-", asset, ".csv"), 
                  col_types = cols_only(Date = col_date(), `Adj Close` = col_double()))
   prices <- xts(tb$`Adj Close`, order.by = tb$Date)[paste0(start, "/")]
-  colnames(prices) <- "close"
-  return(na.omit(Return.calculate(prices, method = "log")))
+  colnames(prices) <- paste0(asset, "close")
+  return(dailyReturn(prices))
 }
-# Gera um tible com uma coluna com o codigo do ativo, a serie de retornos - ts e
-# o nome do indice - id_name
+
+# XTS de precos e de retornos
 assets <- c("NATU3", "LAME4")
+precos <- prices(assets, start)
+retornos <- na.omit(Return.calculate(precos))
+port_ret <- xts(retornos %*% w, order.by = index(retornos)) # Retornos do portfolio
+
+# Gera o grafico dos ativos -----------------------------------------------
+op <- par(mfrow = c(2, 2))
+plot(precos$NATU3,
+     grid.ticks.on = "years",
+     main = "NATU3")
+plot(precos$LAME4,
+     grid.ticks.on = "years",
+     main = "LAME4")
+plot(retornos$NATU3,
+     grid.ticks.on = "years",
+     main = "NATU3")
+plot(retornos$LAME4,
+     grid.ticks.on = "years",
+     main = "LAME4")
+par(op)
+
+
+# VaR da carteira ---------------------------------------------------------
+
+roll_var <- -rollapplyr(retornos,
+                       width = 252,
+                       FUN = VaR_port,
+                       by.column = FALSE)
+colnames(roll_var) <- "VaR"
+port_ret <- merge(port_ret, roll_var)
+
+plot(port_ret)
+
 lista <- lapply(assets, list.returns, start)
 names(lista) <- assets
 assets.tbl <- enframe(lista) %>% 
