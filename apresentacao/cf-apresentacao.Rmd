@@ -11,7 +11,7 @@ output:
     keep_tex: true
     incremental: false
     #fig_width: 10
-    #fig_height: 10
+    #fig_height: 4
     fig_caption: false
     slide_level: 2
     #template: artigo-template.tex
@@ -72,13 +72,79 @@ subjacente.
 
 ## Probabilidade de eventos adversos
 
+- _Risco_ – Fortemente relacionado a incerteza. Chance de
+acontecimento de um evento que impacte o resultado de uma
+operação financeira. Pode ser decomposto em fatores.
+
+- _Risco de mercado_ – oscilações do mercado.
+
+- _Risco de crédito_ – default da contra-parte.
+
+- _Risco de juros _– oscilações nas taxas de juros.
+
+- _Risco de liquidez_ - não poder comprar ou vender a tempo.
+
+- _Risco do modelo_ - uso de um modelo incorreto.
+
+- _Risco operacional_ - risco do negócio da empresa.
 
 ## VaR - Valor em Risco
 
+- _VaR_ - Valor em Risco: medida da máxima perda potencial com uma dada probabilidade em um horizonte pré-definido.
+
+$$
+VaR_\alpha^t=\inf\{F_{L_{t+1}} | \mathcal{H}_t(\mathcal{L}) \geq \alpha\}
+$$
+
+Problemas associados ao VaR:
+
+- Não informa nada sobre a cauda da distribuição.
+
+- Não é subaditivo em alguns casos, portanto, não é uma medida coerente de risco.
 
 ## ES - _Expected Shortfall_
 
+- _ES_ - _Expected Shortfall_: também conhecido como Conditional VaR - CVaR, é o valor esperado de uma perda, dado que esta tenha violado o valor do VaR.
+
+$$
+ES_\alpha^t=E[L_{t+1} | L_{t+1} > VaR_\alpha^t]=\frac{1}{1-\alpha}\int_{\alpha}^{1}q_u(F_L)du
+$$
+
+- Surgiu para contornar os problemas do VaR.
+
+- É coerente e possui informação sobre a cauda.
+
+- Adotado pelo Comitê de Basileia
+
+## Diversas maneiras de calcular VaR e ES
+
+Tanto o VaR quanto o ES podem ser calculados:
+
+- Simulação histórica
+
+- Paramétrico (Normal, t-Student)
+
+- Paramétrico modificado (Cornish-Fisher)
+
+- Semi-paramétrico (teoria do valor extremo)
+
+## VaR e ES na distribuição de perdas
+
+\includegraphics[width=4.8in, height=3.2in]{./figs/VaR.png}
+
+## Evolução de LAME4 e NATU3
+
+\includegraphics[width=4.8in, height=3.2in]{./figs/precos.pdf}
+
+## VaR normal e simulação histórica
+
+\includegraphics[width=4.8in, height=3.2in]{./figs/ret_var.pdf}
+
 ## _Stress Test_
 
+## Perguntas e Respostas
 
+## Basileia
+
+- on Banking Supervision, B. C. Fundamental review of the trading book: A revised market risk framework. 2013. Disponível em: <http://www.bis.org/publ/bcbs265.pdf>.
 

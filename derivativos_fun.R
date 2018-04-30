@@ -1,12 +1,8 @@
 ## Funcoes utilizadas em derivativos.R
 ## artigo_fun.R
 
-if(!all(c("rugarch", "fExtremes", "xts", "tidyverse") %in% loadedNamespaces())){
-  library(tidyverse)
-  library(xts)
-  library(fExtremes)
-  library(rugarch)
-} # Carrega os pacotes necessarios se faltantes
+# Carrega os pacotes necessarios se faltantes
+library(timetk)
 
 cores <- detectCores() # Quantos cores estao rodando
 
@@ -23,7 +19,9 @@ prices <- function(assets, start) {
     colnames(l_prices[[i]]) <- assets[i]
   }
   xts_prices <- na.locf(do.call(merge, l_prices))
-  return(xts_prices)
+  tbl_prices <- tk_tbl(xts_prices) %>% 
+    gather(key = symbol, value = preco, -index)
+  return(tbl_prices)
 }
 
 # VaR_port ----------------------------------------------------------------
@@ -33,14 +31,17 @@ VaR_port <- function(R,
                      method = "gaussian",
                      portfolio_method = "component",
                      weights = NULL,
-                     invert = FALSE){
-  var_p <- VaR(R = R,
-               p = p,
-               method = method,
-               portfolio_method = portfolio_method,
-               weights = weights,
-               invert = invert)
-  return(var_p$VaR)
+                     invert = TRUE){
+  var_p <- PerformanceAnalytics::VaR(R = R,
+                                     p = p,
+                                     method = method,
+                                     portfolio_method = portfolio_method,
+                                     weights = weights,
+                                     invert = invert)
+  if (method == "gaussian")
+    return(var_p$VaR)
+  else if (method == "historical")
+    return(var_p)
 }
 
 # roll_fit ----------------------------------------------------------------
