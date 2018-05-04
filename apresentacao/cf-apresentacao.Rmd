@@ -43,6 +43,14 @@ Os derivativos são:
 
 - Negociados em bolsa ou mercado de balcão (OTC).
 
+# Opções, Futuros e Swaps
+
+## Opções
+
+
+
+## Futuros
+
 ## Comprar ou vender um ativo no futuro
 
 - Contrato Futuro ou Termo - comprar ou vender um ativo em uma data
@@ -54,16 +62,6 @@ futura por um preço determinado.
 subjacente.
 
 - Ambos contratos são negociados em bolsa.
-
-# Opções, Futuros e Swaps
-
-## Opções
-
-
-
-## Futuros
-
-
 
 ## Swaps
 
@@ -87,6 +85,27 @@ operação financeira. Pode ser decomposto em fatores.
 - _Risco do modelo_ - uso de um modelo incorreto.
 
 - _Risco operacional_ - risco do negócio da empresa.
+
+## Várias medidas de risco podem ser utilizadas
+
+As principais são: 
+
+- Valor em Risco - VaR
+
+- _Expected Shortfall_ - ES
+
+Outras:
+
+- Volatilidade histórica
+
+- Semi-Deviation
+
+- Sharpe Ratio
+
+- Information Ratio
+
+- Omega Ratio
+
 
 ## VaR - Valor em Risco
 
@@ -136,15 +155,58 @@ Tanto o VaR quanto o ES podem ser calculados:
 
 \includegraphics[width=4.8in, height=3.2in]{./figs/precos.pdf}
 
-## VaR normal e simulação histórica
+## Cálculo das medias de risco
 
-\includegraphics[width=4.8in, height=3.2in]{./figs/ret_var.pdf}
+\includegraphics[width=4.8in, height=3.2in]{./figs/VaR_carteira.png}
 
 ## _Stress Test_
+
+- Surge após a crise financeira global de 2008-09
+
+- Projeções de perdas em um cenário extremo para avaliar a adequação da tomada de risco
+
+- Período de 1 ano de grandes perdas como base das projeções
+
+- Ao valor do VaR deve ser adicionado o _Stressed VaR_
+
+## Simulação de Monte Carlo em cenário de _stress_
+
+**Incluir os dados da simulação**
+
+\includegraphics[width=4.6in, height=3in]{./figs/Caminhos.png}
+
 
 ## Perguntas e Respostas
 
 ## Basileia
 
-- on Banking Supervision, B. C. Fundamental review of the trading book: A revised market risk framework. 2013. Disponível em: <http://www.bis.org/publ/bcbs265.pdf>.
+- “The Committee requires banks to calculate a **stressed value-at-risk** taking
+into account a **one-year observation period** relating to significant
+losses, which must be calculated in addition to the value-at-risk based on
+the most recent one-year observation period.” Revisions to the Basel II Market Risk Framework, 2011
 
+- on Banking Supervision, Basel Committee. Fundamental review of the trading book: A revised market risk framework. 2013. Disponível em: <http://www.bis.org/publ/bcbs265.pdf>. Estipula o ES a 97.5% como a medida de risco de mercado a ser utilizada no futuro.
+
+## VaR normal e simulação histórica
+
+\includegraphics[width=4.8in, height=3.2in]{./figs/ret_var.pdf}
+
+## Simulação de Monte Carlo Histogramas Retornos 10d
+
+\includegraphics[width=4.8in, height=3.2in]{./figs/MC_hist.png}
+
+## Formulário
+
+Movimento Browniano: $\ln(P_t/P_{t-1})\sim\Phi[(\mu-\frac{\sigma^2}{2})T, \, \sigma\sqrt T]$
+
+Retorno continuamente composto: $\lim\limits_{n\rightarrow\infty}(1+\frac{r}{n})^n=e^r$
+
+Black-Scholes: 
+
+Futuro: 
+
+$VaR_\alpha=\ \mathbf{\omega^\prime\mu}+\sigma \varPhi^{-1}(\alpha)$
+
+$ES_\alpha=\ \mathbf{\omega^\prime\mu}+\sigma \frac{1}{1-\alpha}\phi[\varPhi^{-1}(\alpha)]$
+
+$\sigma^2=\ \mathbf{\omega^\prime \varSigma\ \omega}$
